@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на свадьбу</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(145deg, #f8f0e7 0%, #e1d6cd 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .invitation-card {
+            max-width: 650px;
+            width: 100%;
+            background-color: #fffaf5;
+            border-radius: 30px 30px 150px 30px;
+            box-shadow: 0 25px 50px -8px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(232, 195, 160, 0.4);
+        }
+
+        .floral-divider {
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M10,10 Q20,0 30,10 T50,10 T70,10 T90,10" stroke="%23d4a373" fill="none" stroke-width="1.5" opacity="0.5"/><circle cx="20" cy="10" r="2" fill="%23d4a373" opacity="0.6"/><circle cx="50" cy="10" r="2" fill="%23d4a373" opacity="0.6"/><circle cx="80" cy="10" r="2" fill="%23d4a373" opacity="0.6"/></svg>') repeat-x center;
+            background-size: 100px 20px;
+            margin: 10px 0;
+        }
+
+        .content {
+            padding: 40px 35px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: #b07d62;
+            word-spacing: 8px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 58px;
+            font-weight: normal;
+            font-family: 'Times New Roman', serif;
+            color: #5e3a2c;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        h1 span {
+            font-size: 32px;
+            display: block;
+            font-style: italic;
+            color: #b07d62;
+        }
+
+        .date-circle {
+            background-color: #fceae3;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 25px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #d4a373;
+        }
+
+        .day {
+            font-size: 56px;
+            font-weight: bold;
+            line-height: 1;
+            color: #5e3a2c;
+        }
+
+        .month-year {
+            font-size: 22px;
+            text-transform: uppercase;
+            color: #7f5539;
+        }
+
+        .details {
+            margin: 30px 0 25px;
+            font-size: 18px;
+            color: #3f2e23;
+        }
+
+        .details p {
+            margin: 8px 0;
+        }
+
+        .time {
+            font-size: 24px;
+            font-weight: bold;
+            color: #9c6e4d;
+            border-bottom: 1px solid #ead7c5;
+            padding-bottom: 20px;
+        }
+
+        .location {
+            background-color: #f6eee9;
+            padding: 20px;
+            border-radius: 60px 20px 60px 20px;
+            margin: 30px 0;
+            font-style: italic;
+        }
+
+        .location strong {
+            font-style: normal;
+            font-size: 22px;
+            display: block;
+            margin-bottom: 5px;
+            color: #5e3a2c;
+        }
+
+        .rsvp-button {
+            display: inline-block;
+            background-color: #b07d62;
+            color: white;
+            text-decoration: none;
+            padding: 15px 50px;
+            border-radius: 40px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 10px rgba(176, 125, 98, 0.4);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            margin-top: 15px;
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .rsvp-button:hover {
+            background-color: #8b5e48;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 94, 72, 0.4);
+        }
+
+        .form-container {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background-color: #fcf6f0;
+            border-radius: 30px;
+            border: 1px solid #e5cfc0;
+            text-align: left;
+        }
+
+        .form-container h3 {
+            text-align: center;
+            color: #5e3a2c;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5e3a2c;
+            font-size: 16px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d9c2b2;
+            border-radius: 25px;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            background-color: white;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #b07d62;
+            box-shadow: 0 0 0 3px rgba(176, 125, 98, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .radio-group label {
+            display: inline;
+            margin-left: 5px;
+        }
+
+        .radio-group input {
+            width: auto;
+        }
+
+        .submit-btn {
+            background-color: #9c6e4d;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 40px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Georgia', serif;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #7b543a;
+        }
+
+        .close-form {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #b07d62;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #917b6b;
+        }
+
+        /* Модальные окна */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-window {
+            background-color: #fffaf5;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 30px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 2px solid #d4a373;
+            animation: modalAppear 0.3s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 28px;
+            color: #5e3a2c;
+            margin-bottom: 15px;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .modal-text {
+            font-size: 18px;
+            color: #7f5539;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .modal-button {
+            background-color: #b07d62;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            transition: 0.3s;
+        }
+
+        .modal-button:hover {
+            background-color: #8b5e48;
+            transform: translateY(-2px);
+        }
+
+        /* Специально для грустного котика */
+        .sad-cat {
+            font-size: 70px;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .content { padding: 30px 20px; }
+            h1 { font-size: 42px; }
+            h1 span { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-card">
+        <div class="floral-divider"></div>
+        <div class="content">
+            <div class="subtitle">СЧАСТЛИВЫ ВМЕСТЕ</div>
+            <h1>
+                Александра<br><span>&</span> Дмитрий
+            </h1>
+
+            <div class="date-circle">
+                <span class="day">15</span>
+                <span class="month-year">ИЮНЯ 2026</span>
+            </div>
+
+            <div class="details">
+                <p class="time">15:30</p>
+                <p>Сбор гостей / Церемония</p>
+            </div>
+
+            <div class="location">
+                <strong>Ресторан "Белая лошадь"</strong>
+                г. Москва, ул. Набережная, д. 10<br>
+                Левый берег, причал №7
+            </div>
+
+            <p style="margin: 10px 0 20px; font-size: 18px; color:#5e3a2c;">
+                Будем рады разделить с вами<br> этот счастливый день!
+            </p>
+
+            <!-- КНОПКА, КОТОРАЯ ОТКРЫВАЕТ ФОРМУ -->
+            <button id="showFormBtn" class="rsvp-button">ПОДТВЕРДИТЬ ПРИСУТСТВИЕ</button>
+
+            <!-- СКРЫТАЯ ФОРМА ДЛЯ ВВОДА ДАННЫХ -->
+            <div id="rsvpForm" class="form-container">
+                <div class="close-form">
+                    <button class="close-btn" id="closeFormBtn">×</button>
+                </div>
+                <h3>Подтверждение</h3>
+                
+                <form id="rsvpFormElement">
+                    <div class="form-group">
+                        <label>Ваше имя *</label>
+                        <input type="text" id="name" name="Имя" placeholder="Например: Анна" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Количество человек *</label>
+                        <input type="number" id="guests" name="Количество_гостей" min="1" max="10" value="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Имена всех гостей</label>
+                        <textarea id="guestNames" name="Имена_гостей" placeholder="Если вас двое или больше, напишите имена"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Номер телефона *</label>
+                        <input type="tel" id="phone" name="Телефон" placeholder="+7 (999) 123-45-67" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Будете ли вы?</label>
+                        <div class="radio-group">
+                            <input type="radio" id="yes" name="Приду" value="Да, обязательно" checked>
+                            <label for="yes">Обязательно приду</label>
+                            
+                            <input type="radio" id="no" name="Приду" value="Нет, не смогу">
+                            <label for="no">Не смогу прийти</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Пожелания или комментарий</label>
+                        <textarea id="comments" name="Комментарий" placeholder="Есть аллергия, нужен детский стульчик и т.д."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">ОТПРАВИТЬ ПОДТВЕРЖДЕНИЕ</button>
+                </form>
+            </div>
+
+            <div class="footer-note">
+                Пожалуйста, подтвердите до 1 мая<br>
+                Dress code: элегантный (бежевый, зеленый)
+            </div>
+        </div>
+        <div class="floral-divider"></div>
+    </div>
+
+    <!-- МОДАЛЬНЫЕ ОКНА -->
+    <!-- Окно для тех, кто придет -->
+    <div id="happyModal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-icon">🌸💍🌸</div>
+            <div class="modal-title">Спасибо за подтверждение!</div>
+            <div class="modal-text">
+                Мы очень рады, что вы разделите с нами этот день.<br>
+                Ждем вас <strong>15 июня в 15:30</strong>!<br><br>
+                🥂 До встречи!
+            </div>
+            <button class="modal-button" onclick="closeModalAndReturn('happyModal')">Хорошо</button>
+        </div>
+    </div>
+
+    <!-- Окно для тех, кто не придет (с грустным котиком) -->
+    <div id="sadModal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="sad-cat">😿</div>
+            <div class="modal-title">Очень жаль!</div>
+            <div class="modal-text">
+                Мы будем скучать по вам в этот день.<br>
+                Но все равно шлем вам теплые объятия!<br><br>
+                🐱 Грустный котик шлет вам утешение.
+            </div>
+            <button class="modal-button" onclick="closeModalAndReturn('sadModal')">Хорошо</button>
+        </div>
+    </div>
+
+    <script>
+        const showFormBtn = document.getElementById('showFormBtn');
+        const rsvpForm = document.getElementById('rsvpForm');
+        const closeFormBtn = document.getElementById('closeFormBtn');
+        const form = document.getElementById('rsvpFormElement');
+
+        // Модальные окна
+        const happyModal = document.getElementById('happyModal');
+        const sadModal = document.getElementById('sadModal');
+
+        // Показать форму
+        showFormBtn.addEventListener('click', function() {
+            rsvpForm.style.display = 'block';
+            showFormBtn.style.display = 'none';
+        });
+
+        // Скрыть форму (крестик)
+        closeFormBtn.addEventListener('click', function() {
+            rsvpForm.style.display = 'none';
+            showFormBtn.style.display = 'inline-block';
+        });
+
+        // Функция закрытия модального окна и возврата на главную
+        function closeModalAndReturn(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            // Возврат на главную (форма уже скрыта, кнопка видна)
+            // Прокрутка вверх для красоты
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Обработка отправки формы
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Получаем значение радио-кнопки
+            const willAttend = document.querySelector('input[name="Приду"]:checked').value;
+            
+            // Собираем данные из формы
+            const formData = {
+                Имя: document.getElementById('name').value,
+                Количество_гостей: document.getElementById('guests').value,
+                Имена_гостей: document.getElementById('guestNames').value,
+                Телефон: document.getElementById('phone').value,
+                Приду: willAttend,
+                Комментарий: document.getElementById('comments').value
+            };
+
+            // Отправляем данные на email
+            try {
+                const hiddenForm = document.createElement('form');
+                hiddenForm.method = 'POST';
+                hiddenForm.action = 'https://formsubmit.co/sanaevanton14@gmail.com';
+                hiddenForm.target = '_blank';
+                
+                // Служебные поля
+                const subject = document.createElement('input');
+                subject.type = 'hidden';
+                subject.name = '_subject';
+                subject.value = 'Новый ответ на свадебное приглашение!';
+                hiddenForm.appendChild(subject);
+                
+                const captcha = document.createElement('input');
+                captcha.type = 'hidden';
+                captcha.name = '_captcha';
+                captcha.value = 'false';
+                hiddenForm.appendChild(captcha);
+                
+                const template = document.createElement('input');
+                template.type = 'hidden';
+                template.name = '_template';
+                template.value = 'table';
+                hiddenForm.appendChild(template);
+                
+                // Поля формы
+                for (let key in formData) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = formData[key];
+                    hiddenForm.appendChild(input);
+                }
+                
+                document.body.appendChild(hiddenForm);
+                hiddenForm.submit();
+                document.body.removeChild(hiddenForm);
+                
+            } catch (error) {
+                console.error('Ошибка при отправке:', error);
+            }
+
+            // Скрываем форму
+            rsvpForm.style.display = 'none';
+            
+            // Показываем соответствующее модальное окно
+            if (willAttend === 'Да, обязательно') {
+                happyModal.style.display = 'flex';
+            } else {
+                sadModal.style.display = 'flex';
+            }
+            
+            // Очищаем форму
+            form.reset();
+            document.getElementById('yes').checked = true;
+            
+            // Кнопка "Подтвердить" снова видна
+            showFormBtn.style.display = 'inline-block';
+        });
+
+        // Закрытие модального окна при клике на оверлей
+        window.addEventListener('click', function(event) {
+            if (event.target === happyModal) {
+                closeModalAndReturn('happyModal');
+            }
+            if (event.target === sadModal) {
+                closeModalAndReturn('sadModal');
+            }
+        });
+    </script>
+</body>
+</html>
